@@ -3,6 +3,7 @@ const User = require('../models/User');
 const path = require('path');
 const jwt = require("jsonwebtoken");
 
+
 // Signup function
 exports.signup = async (req, res) => {
   try {
@@ -18,24 +19,27 @@ exports.signup = async (req, res) => {
       lastName,
       email,
       password: hashedPassword,
-      profilePhoto: profilePhoto ? profilePhoto.path : null, // Save the profile photo path
+      profilePhoto: profilePhoto ? profilePhoto.path : null,
       role:'user'
     });
 
     await user.save();
-
+    // console.log('User first name:', user.firstName);
     // Generate token
     const token = jwt.sign({
       email: user.email,
       id: user._id
     }, process.env.JWT_SECRET, { expiresIn: '10h' });
-
+    
     // Respond with user creation success and profile photo URL
     res.status(201).json({
       message: 'User created successfully',
       token,
       profilePhoto: user.profilePhoto
+      // firstName: user.firstName,
+      // lastName: user.lastName
     });
+   
   } catch (error) {
     console.error('Signup error:', error); // Log the detailed error
     res.status(500).json({ message: 'Something went wrong', error: error.message });
@@ -65,8 +69,10 @@ exports.signin = async (req, res) => {
     res.status(200).json({
       message: 'Signin successful',
       token,
-      profilePhoto: user.profilePhoto, // Include the profile photo URL in the response
-      email: user.email
+      profilePhoto: user.profilePhoto, 
+      email: user.email,
+      // userFirstName: user.firstName,
+      // userLastName: user.lastName,
     });
   } catch (error) {
     console.error(error);

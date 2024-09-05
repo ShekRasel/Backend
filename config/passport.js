@@ -10,7 +10,7 @@ passport.use(new GoogleStrategy({
 async (accessToken, refreshToken, profile, done) => {
   try {
     let user = await User.findOne({ googleId: profile.id });
-
+    console.log(user);
     if (!user) {
       user = new User({
         googleId: profile.id,

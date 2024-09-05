@@ -6,7 +6,9 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String },
   googleId: { type: String },
-  profilePhoto: { type: String }
+  profilePhoto: { type: String },
+  role: { type: String, default: 'user' },
+  services: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Service' }]
 });
 
 const User = mongoose.model('User', userSchema);

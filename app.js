@@ -25,7 +25,6 @@ app.use(passport.session());
 
 // Static folder for profile photos
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -37,10 +36,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
-app.get('/set-cookie', (req, res) => {
-  res.cookie('m', 'value', { httpOnly: true, secure: true });
-  res.send('Cookie has been set');
-});
+
 
 // Routes
 app.use('/api', authRoutes);
@@ -48,7 +44,8 @@ app.use('/api', serviceRoutes);
 app.use('/api', paymentRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/contact', contactRoute);
-app.use('/auth', require('./routes/auth')); // Add the Google OAuth routes
+app.use('/auth', require('./routes/auth')); 
+
 
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
