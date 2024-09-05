@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",
-    "build": "echo \"No build script needed for backend\""
+    "build": "echo \"No build script needed for backend\"",
+    "postinstall": "npm rebuild bcrypt"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
